@@ -31,7 +31,12 @@ async function run() {
 
 
         const jobsCollection = client.db("jobPortal").collection("jobs");
-        
+
+        app.get('/jobs', async (req, res) => {
+            const cursor = jobsCollection.find();
+            const result =await cursor.toArray();
+            res.send(result)
+        })
 
 
 

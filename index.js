@@ -33,6 +33,11 @@ async function run() {
         const jobsCollection = client.db("jobPortal").collection("jobs");
         const jobsApplicationCollection = client.db("jobPortal").collection("job_application");
 
+
+        app.post('/jwt',async(req,res) =>{
+            
+        })
+
         app.get('/jobs', async (req, res) => {
 
             const email =req.query.email;
@@ -108,10 +113,15 @@ async function run() {
         })
         app.patch('/job_application/:id',async(req,res) =>{
             const id =req.params.id;
+            const data =req.body;
             const filter ={_id:new ObjectId(id)}
             const updateDoc={
-                
+                $set:{
+                    status:data.status
+                }
             }
+            const result =await jobsApplicationCollection.updateOne(filter,updateDoc);
+            res.send(result)
         })
 
 

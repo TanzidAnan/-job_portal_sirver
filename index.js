@@ -26,8 +26,14 @@ const verifyToken=(req,res,next) =>{
     if(!token){
         return res.status(401).send({message:'Unauthoraize token'})
     }
-    
-    next()
+    jwt.verify(token,process.env.JWT_SECRET,(err,decode) =>{
+        if(err){
+            return res.status(401).send({message:'Unauthorized token'})
+        }
+        req.user =decode;
+        next()
+    })
+   
 }
 
 

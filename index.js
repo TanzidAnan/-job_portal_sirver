@@ -105,6 +105,9 @@ async function run() {
         app.get('/job_application',verifyToken,async(req,res) =>{
             const email =req.query.email;
             const query ={applicent_email:email};
+            if(req.user.email !== req.query.email){
+                return res.status(401).send({message:'forbidden access'})
+            }
             const result =await jobsApplicationCollection.find(query).toArray();
             for(const application of result){
                 console.log(application.job_id);

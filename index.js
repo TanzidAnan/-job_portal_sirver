@@ -21,7 +21,13 @@ const logger=(req,res,next) =>{
 }
 
 const verifyToken=(req,res,next) =>{
-
+    console.log('verify token ',req.cookies);
+    const token =req?.cookies?.token;
+    if(!token){
+        return res.status(401).send({message:'Unauthoraize token'})
+    }
+    
+    next()
 }
 
 

@@ -15,7 +15,14 @@ app.use(cors({
 app.use(cookeParser())
 
 
+const logger=(req,res,next) =>{
+    console.log('next logger');
+    next()
+}
 
+const verifyToken=(req,res,next) =>{
+
+}
 
 
 
@@ -83,7 +90,7 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/job_application',async(req,res) =>{
+        app.get('/job_application',verifyToken,async(req,res) =>{
             const email =req.query.email;
             const query ={applicent_email:email};
             const result =await jobsApplicationCollection.find(query).toArray();
